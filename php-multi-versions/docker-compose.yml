@@ -1,0 +1,64 @@
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./www:/var/www/html
+    depends_on:
+      - php72
+#      - php81
+    networks:
+      - backend
+
+  php72:
+    build:
+      context: ./php72
+    container_name: php72
+    volumes:
+      - ./www/gth:/var/www/html/gth
+    environment:
+      - PHP_FPM_USER=www-data
+      - PHP_FPM_GROUP=www-data
+    networks:
+      - backend
+
+#  php81:
+#    build:
+#      context: ./php81
+#    container_name: php81
+#    volumes:
+#      - ./www/project2:/var/www/html/project2
+#    networks:
+#      - backend
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dev_db
+      MYSQL_USER: dev_user
+      MYSQL_PASSWORD: dev_pass
+    ports:
+      - "3309:3306"
+    networks:
+      - backend
+
+  redis:
+#    image: redis:latest
+    build:
+      context: ./redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    command: redis-server --bind 0.0.0.0 --appendonly yes  # 允许所有 IP 访问
+
+networks:
+  backend:
+    driver: bridge #新增
