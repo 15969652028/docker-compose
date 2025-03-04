@@ -1,4 +1,4 @@
 .idea
 **/.idea
 php-multi-versions/www/*
-mysql-data/*
+php-multi-versions/mysql-data/*
