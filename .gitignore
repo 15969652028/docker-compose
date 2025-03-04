@@ -1,3 +1,5 @@
 .idea
 **/.idea
 php-multi-versions/www/
+mysql-data/
+mysql-init/

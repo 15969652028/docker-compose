@@ -38,11 +38,17 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password  # 重要！默认caching_sha2_password改为mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: dev_db
       MYSQL_USER: dev_user
       MYSQL_PASSWORD: dev_pass
+      MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
+    volumes:
+      - mysql_data:/var/lib/mysql  # 使用 named volume 持久化 MySQL 数据
+      - ./mysql-init:/docker-entrypoint-initdb.d  # 初始化 SQL 脚本
     ports:
       - "3309:3306"
     networks:
@@ -62,3 +68,7 @@ services:
 networks:
   backend:
     driver: bridge #新增
+
+### 📂 定义持久化存储卷
+volumes:
+  mysql_data:  # ✅ 这里定义了 MySQL 数据存储卷
