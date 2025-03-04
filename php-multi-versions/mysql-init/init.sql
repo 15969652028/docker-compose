@@ -1,0 +1,3 @@
+CREATE DATABASE IF NOT EXISTS homestead;
+GRANT ALL PRIVILEGES ON homestead.* TO 'dev_user'@'%';
+FLUSH PRIVILEGES;
