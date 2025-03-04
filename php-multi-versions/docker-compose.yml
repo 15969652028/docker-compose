@@ -19,7 +19,7 @@ services:
       context: ./php72
     container_name: php72
     volumes:
-      - ./www/gth:/var/www/html/gth
+      - ./www:/var/www/html
     environment:
       - PHP_FPM_USER=www-data
       - PHP_FPM_GROUP=www-data
