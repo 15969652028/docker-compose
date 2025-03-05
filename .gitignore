@@ -2,3 +2,8 @@
 **/.idea
 php-multi-versions/www/*
 php-multi-versions/mysql-data/*
+php-multi-versions-v1/www/*
+php-multi-versions-v1/mysql-data/*
+services/mysql-data/*
+hyperf/projects/*
+hyperf/docker-compose.hyperf.luoji.yml

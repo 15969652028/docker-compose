@@ -1,0 +1,28 @@
+services:
+  ### 🌐 Hyperf 项目 1
+  hyperf_project1:
+    image: hyperf/hyperf:8.1-alpine-v3.18-swoole
+    container_name: hyperf_project1
+    restart: always
+    volumes:
+      - ./projects/project1:/opt/www
+    working_dir: /opt/www
+    command: ["php", "/opt/www/bin/hyperf.php", "start"]
+    networks:
+      - backend  # ✅ 确保 hyperf 连接到 backend 网络
+
+  ### 🌐 Hyperf 项目 2
+  hyperf_project2:
+    image: hyperf/hyperf:8.1-alpine-v3.18-swoole
+    container_name: hyperf_project2
+    restart: always
+    volumes:
+      - ./projects/project2:/opt/www
+    working_dir: /opt/www
+    command: ["php", "/opt/www/bin/hyperf.php", "start"]
+    networks:
+      - backend  # ✅ 确保 hyperf 连接到 backend 网络
+
+networks:
+  backend:
+    external: true  # ✅ 这样 hyperf 会加入 backend 网络

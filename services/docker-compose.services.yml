@@ -1,0 +1,49 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: dev_db
+      MYSQL_USER: dev_user
+      MYSQL_PASSWORD: dev_pass
+    ports:
+      - "3309:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql-init:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+  redis:
+#    image: redis:alpine
+    build:
+      context: ./redis
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+    command: redis-server --bind 0.0.0.0 --appendonly yes  # 允许所有 IP 访问
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"  # RabbitMQ 端口
+      - "15672:15672"  # RabbitMQ 管理界面
+    networks:
+      - backend
+
+### 📂 定义持久化存储卷
+volumes:
+  mysql_data:   # ✅ 这里定义了 MySQL 数据存储卷
+
+networks:
+  backend:
+    external: true

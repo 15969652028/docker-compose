@@ -1,0 +1,41 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./www:/var/www/html
+    depends_on:
+      - php72
+#      - php81
+    networks:
+      - backend
+
+  php72:
+    build:
+      context: ./php72
+    container_name: php72
+    restart: always
+    volumes:
+      - ./www:/var/www/html
+    environment:
+      - PHP_FPM_USER=www-data
+      - PHP_FPM_GROUP=www-data
+    networks:
+      - backend
+
+#  php81:
+#    build:
+#      context: ./php81
+#    container_name: php81
+#    volumes:
+#      - ./www/project2:/var/www/html/project2
+#    networks:
+#      - backend
+
+networks:
+  backend:
+    external: true  # 共享 backend 网络
