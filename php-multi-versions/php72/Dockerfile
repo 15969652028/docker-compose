@@ -12,7 +12,7 @@ RUN apt-get install -y curl unzip \
 
 RUN apt-get update && apt-get install -y \
     libpng-dev libjpeg-dev libfreetype6-dev \
-    && docker-php-ext-install pdo pdo_mysql gd zip pcntl \
+    && docker-php-ext-install pdo pdo_mysql gd zip pcntl bcmath \
     && pecl install redis-5.3.7 \
     && docker-php-ext-enable redis
 
