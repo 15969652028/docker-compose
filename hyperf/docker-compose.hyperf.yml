@@ -1,8 +1,8 @@
 services:
   ### 🌐 Hyperf 项目 1
-  hyperf_doudian:
+  hyperf_project1:
     image: hyperf/hyperf:8.0-alpine-v3.12-swoole
-    container_name: hyperf_doudian
+    container_name: hyperf_project1
     restart: always
     privileged: true  # ✅ 让容器以特权模式运行
     user: "root"  # ✅ 以 root 用户运行
@@ -11,9 +11,9 @@ services:
     ports:
       - "9501:9501"  # ✅ 映射端口
     volumes:
-      - ./projects/doudian:/data/project  # ✅ 挂载目录
+      - ./projects/project1:/data/project  # ✅ 挂载目录
     networks:
-      - backend  # ✅ 让 hyperf_doudian 连接 backend 网络
+      - backend  # ✅ 让 hyperf_project1 连接 backend 网络
 
   ### 🌐 Hyperf 项目 2
   hyperf_project2:
