@@ -18,8 +18,20 @@ RUN apt-get update && apt-get install -y \
 
 # 安装 procps（提供 `ps` 命令）
 RUN apt-get update && apt-get install -y procps
-
 # 设置 PHP 内存限制
 RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory_limit.ini
+# 安装 vim
+RUN apt update && apt install -y vim
+
+# 安装 cron
+RUN apt update && apt install -y cron
+
+# 复制 crontab 任务文件
+COPY crontab /etc/cron.d/my-cron-job
+RUN chmod 0644 /etc/cron.d/my-cron-job
+RUN crontab /etc/cron.d/my-cron-job
+
+# 确保 `cron` 服务运行
+CMD service cron start && php-fpm
 
 WORKDIR /var/www/html
